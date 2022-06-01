@@ -6,7 +6,7 @@ import {
     TorusGeometry,
     SphereGeometry,
 } from 'three';
-import { degToRad } from 'three/src/math/MathUtils';
+import { degToRad, randInt } from 'three/src/math/MathUtils';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
@@ -41,7 +41,7 @@ export function setupThreeJSScene(): void {
     scene.add(myShape);
 
     //Donut
-    const donutGeometry = new TorusGeometry(2,1,14,15)
+    const donutGeometry = new TorusGeometry(2, 1, 14, 15)
     const donutMaterial = new MeshStandardMaterial({
         color: 0x00ff00, flatShading: true, transparent: false, opacity: 0.5
     })
@@ -51,13 +51,30 @@ export function setupThreeJSScene(): void {
     myDonutShape.rotation.x = degToRad(90)
     scene.add(myDonutShape)
 
-    //Sphere
-    const sphereGeometry = new SphereGeometry(7, 32, 16)
-    const sphereMaterial = new MeshStandardMaterial({
-        color: 0xff0000, flatShading: false, transparent: true, opacity: 0.5
-    })
-    const mySphereShape: Mesh = new Mesh(sphereGeometry, sphereMaterial)
-    scene.add(mySphereShape)
+    //Spheres
+    const colors = [
+        "#556270",
+        "#4ecdc4",
+        "#c7f464",
+        "#ff6b6b",
+        "#c44d58"
+    ]
+
+    for (let i = 0; i < 100; i++) {
+        const sphereGeometry = new SphereGeometry(7, 12, 12)
+        const sphereMaterial = new MeshStandardMaterial({
+            color: pick(colors), flatShading: true
+        })
+        const mySphereShape: Mesh = new Mesh(sphereGeometry, sphereMaterial)
+        mySphereShape.position.x = randInt(-50, 50);
+        mySphereShape.position.y = randInt(-50, 50);
+        mySphereShape.position.z = randInt(-50, 50);
+        scene.add(mySphereShape)
+    }
+
+    function pick<T>(arr: T[]): T {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
 
 
 
