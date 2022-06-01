@@ -4,6 +4,7 @@ import {
     MeshStandardMaterial,
     BoxBufferGeometry,
     TorusGeometry,
+    SphereGeometry,
 } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
 import { setupCamera } from './setupCamera';
@@ -42,13 +43,22 @@ export function setupThreeJSScene(): void {
     //Donut
     const donutGeometry = new TorusGeometry(2,1,14,15)
     const donutMaterial = new MeshStandardMaterial({
-        color: 0x00ff00, flatShading: true
+        color: 0x00ff00, flatShading: true, transparent: false, opacity: 0.5
     })
     const myDonutShape: Mesh = new Mesh(donutGeometry, donutMaterial)
     myDonutShape.position.y = 1;
     myDonutShape.position.z = 50;
     myDonutShape.rotation.x = degToRad(90)
     scene.add(myDonutShape)
+
+    //Sphere
+    const sphereGeometry = new SphereGeometry(7, 32, 16)
+    const sphereMaterial = new MeshStandardMaterial({
+        color: 0xff0000, flatShading: false, transparent: true, opacity: 0.5
+    })
+    const mySphereShape: Mesh = new Mesh(sphereGeometry, sphereMaterial)
+    scene.add(mySphereShape)
+
 
 
     animate();
