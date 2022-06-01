@@ -3,7 +3,9 @@ import {
     Mesh,
     MeshStandardMaterial,
     BoxBufferGeometry,
+    TorusGeometry,
 } from 'three';
+import { degToRad } from 'three/src/math/MathUtils';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
@@ -27,14 +29,26 @@ export function setupThreeJSScene(): void {
     setupHelpers(scene);
 
     //shape(s)
-    const geometry = new BoxBufferGeometry(10, 10, 10);
+    // Rectangle
+    const geometry = new BoxBufferGeometry(10, 20, 1);
     const material = new MeshStandardMaterial({
-        color: 0xff00ff
+        color: 0xffbb00
     });
-
     const myShape: Mesh = new Mesh(geometry, material);
-    myShape.position.y = 20;
+    myShape.position.y = 0;
+    myShape.position.z = -50;
     scene.add(myShape);
+
+    //Donut
+    const donutGeometry = new TorusGeometry(2,1,14,15)
+    const donutMaterial = new MeshStandardMaterial({
+        color: 0x00ff00, flatShading: true
+    })
+    const myDonutShape: Mesh = new Mesh(donutGeometry, donutMaterial)
+    myDonutShape.position.y = 1;
+    myDonutShape.position.z = 50;
+    myDonutShape.rotation.x = degToRad(90)
+    scene.add(myDonutShape)
 
 
     animate();
