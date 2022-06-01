@@ -18,6 +18,7 @@ export function setupThreeJSScene(): void {
     const renderer = setupRenderer(camera, dimensions);
 
     const controls = setupOrbitControls(camera, renderer.domElement);
+    controls.autoRotate = true
 
     const scene = new Scene();
 
